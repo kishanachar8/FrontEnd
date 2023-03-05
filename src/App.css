@@ -27,6 +27,12 @@
 .App-link {
   color: #61dafb;
 }
+.Banner{
+  background-image: url('../public/images/food2.jpeg');
+  background-size: cover;
+  background-position: center;
+  height: 80vh;
+}
 
 @keyframes App-logo-spin {
   from {

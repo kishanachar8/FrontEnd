@@ -1,33 +1,58 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { MDBBtn, MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput } from 'mdb-react-ui-kit';
+import '../styles/login.css'
 const Login = () => {
-    let[email,setEmail]=useState('')
-    let[password,setPassword]=useState('')
+    let [email, setEmail] = useState('')
+    let [password, setPassword] = useState('')
 
-    let handleSubmit = () => {
+    let navigate = useNavigate();
+
+    let handleSubmit = (e) => {
+        e.preventDefault();
+
+        let data = {email, password }
+            axios.post('http://localhost:4000/', data)
+                .then((res) => {
+                    if(res.data.message === 'login success'){
+                        navigate('/home')
+                    }
+                    else{
+                        alert(res.data.message)
+                    }
+                })
     }
     return (
-        <div className="login">
-            <h1>Login Page</h1>
-            <div className="login_form">
-                <form action="" onSubmit={handleSubmit}>
-                    <div className="email">
-                        <input type="email" placeholder="email address" className="form-control" name="email" />
-                    </div>
-                    <div className="password">
-                        <input type="password" placeholder="password" className="form-control" name="password" />
-                    </div>
-                    <div className="login_button">
-                        <button className="btn btn-outline-primary">Login</button>
-                    </div>
-                    <div className="signUp_button">
-                        <p>Are you a new user?</p>
-                        <Link to='/signup' className='btn btn-outline-primary'>Sign up</Link>
-                    </div>
-                </form>
-            </div>
-        </div>
+        <MDBContainer fluid>
+
+            <MDBRow className='d-flex justify-content-center align-items-center h-100'>
+                <MDBCol col='12'>
+
+                    <MDBCard className='bg-dark text-white my-5 mx-auto' style={{ borderRadius: '1rem', maxWidth: '400px' }}>
+                        <MDBCardBody className='p-5 d-flex flex-column align-items-center mx-auto w-100'>
+
+                            <h2 className="fw-bold mb-2 text-uppercase">Login</h2>
+                            <p className="text-white-50 mb-5">Please enter your Email and password!</p>
+
+                            <form action="" onSubmit={handleSubmit} className='d-flex flex-column align-items-center mx-auto w-100'>
+                            <MDBInput wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='Email address' id='formControlLg' type='email' size="lg" onChange={(e) => setEmail(e.target.value)} name='email' />
+                            <MDBInput wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='Password' id='formControlLg' type='password' size="lg" onChange={(e) => setPassword(e.target.value)}  name='password'/>
+                            <MDBBtn outline className='mx-2 px-5 btn btn-primary' color='white' >Login</MDBBtn>
+                            </form>
+                            <div>
+                                <p className="mb-0">Don't have an account? </p>
+                                <Link to="/signup" className="text-white-50 fw-bold">Sign Up</Link>
+                            </div>
+                        </MDBCardBody>
+                    </MDBCard>
+
+                </MDBCol>
+            </MDBRow>
+
+        </MDBContainer>
     );
 }
 

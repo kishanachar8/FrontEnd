@@ -1,0 +1,13 @@
+.posts_lists {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+
+.post_img img {
+    border-radius: 15px;
+}
+
+.pst {
+    margin: 55px;
+}
